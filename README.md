@@ -11,5 +11,7 @@ Provide the database name to the script
 
 Open the shell script update the database name to the variable 'dbname' and save.
 Run the script in shell window 
- chmod +x count_tables.sh
- ./count_tables.sh < tables.txt > counts.xlsx
+
+chmod +x count_tables.sh
+
+./count_tables.sh < tables.txt > counts.xlsx
