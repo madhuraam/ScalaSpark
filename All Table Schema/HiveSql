@@ -41,7 +41,7 @@ object HiveSql {
         .mode("append")
         .save("hdfs://ip-172-31-53-48.ec2.internal:8020//user/jjraam1018/data/ted.csv")
 
-
+ 
     }
    
   )
