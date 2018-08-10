@@ -1,0 +1,53 @@
+
+import org.apache.spark.sql.hive._
+import org.apache.spark.sql._
+
+import java.io.File
+import org.apache.spark.sql.functions.lit
+
+object HiveSql {
+  
+  def main(args: Array[String]) {
+    
+    //val warehouseLocation = new File("spark-warehouse").getAbsolutePath
+    
+    val warehouseLocation = "file:${system:user.dir}/spark-warehouse"
+
+    
+    val spark = SparkSession
+      .builder
+      .appName("HiveSql")
+      .master("local[*]")
+      //.config("hive.metastore.warehouse.dir","user/hive/warehosue") 
+      .config("spark.sql.warehouse.dir", warehouseLocation)
+      .enableHiveSupport()
+      .getOrCreate()
+      
+    import spark.implicits._
+    import spark.sql
+    
+    sql("use hive_dbase")	
+   val df = sql("show tables")
+   df.show()
+   val lst = df.select("tableName").map(r => r.getString(0)).collect.toList 
+   lst.foreach ( 
+    x => { 
+    val q = "desc " + x
+    val dfs = sql(s"$q")
+    val dfA = dfs.withColumn("z", lit(x)) 
+   dfA.show()
+    dfA.coalesce(1).write.format("com.databricks.spark.csv")
+        //.option("header", "false")
+        .mode("append")
+        .save("hdfs://ip-172-31-53-48.ec2.internal:8020//user/jjraam1018/data/ted.csv")
+
+
+    }
+   
+  )
+
+
+    spark.stop()
+            
+  }
+}
