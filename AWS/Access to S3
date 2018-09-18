@@ -20,9 +20,9 @@ object accessaws {
     downloadFromS3("Json.zip","../down/Json.zip")
   }
 
-  val accessKey = "AKIAJW6WYQVRRW5LLQYQ"
-  val secretKey = "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"
-  val bucketName = "awss3datalake"
+  val accessKey = ""
+  val secretKey = ""
+  val bucketName = ""
   val urlPrefix = "https://s3-us-east-2.amazonaws.com"
   val filename = "Current Authentication.png"
 
